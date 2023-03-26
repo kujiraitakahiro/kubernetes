@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:1.23.0
+        name: nginx
+        volumeMounts:
+        - name: index-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: index-volume
+        configMap:
+          name: index-version1
